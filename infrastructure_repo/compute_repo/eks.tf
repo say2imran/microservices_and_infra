@@ -16,6 +16,7 @@ module "vpc" {
   enable_nat_gateway         = true
   single_nat_gateway         = false
   ## Disabling Single NAT for High availability
+  one_nat_gateway_per_az = true
   enable_dns_hostnames       = true
   enable_dns_support         = true
   create_igw                 = true
