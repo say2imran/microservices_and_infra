@@ -62,3 +62,52 @@ _Kubernetes can be used for both application container/pods orchestration as wel
 
 **My selection:
 Kubernetes**
+
+## 3. Describe the solution to automate the infrastructure deployment and prepare the most important snippets of code/configuration
+
+**Automated Infrastructure Deployment** can be achieved by combining IaC with CI/CD as described below:
+
+1. Infrastructure should be setup using Infrastructure as a Code (IaC) approach
+2. Deployment should be performed using CI/CD pipeline
+
+### **IaC Tool Options:**
+
+**Terraform:**
+
+If we already have TFC/TFE, we can use the **Terraform Workspace** feature to isolate different environments as well as their components (e.g Compute, DB, Networking, etc.)
+
+
+**Terragrunt:**
+
+Terragrunt can be very useful if we have complex infrastructure, with multi-region, multiple infrastructure components.
+Also it does NOT require Terraform subscription of TFC, which will save cost, but then we would need to maintain statefile and locking on our own, as well server to execute the IaC jobs.
+
+
+
+### Automated Deployment (CI/CD):
+- CI/CD tools such as **Spinnaker, GitHub Actions, Jenkins** could be used to execute the Infrastructure Code (Terraform, Terragrunt, Pulumi, etc.)
+- Deployment pipelines should be triggered based on the changes in the respective branches **Dev/UAT/PROD**, with additional control for Production promotion
+
+
+#### Pseudo Code:
+Sample CI/CD stages to execute IaC Pipeline:
+
+```
+TRIGGER: Code CheckIn/Pull Request
+
+STAGE: Code Validation/Testing
+STAGE: Code Security Check (e.g. tfsec)
+STAGE: Plan
+STAGE: Approval stage
+STAGE: Apply
+```
+
+Below is sample representation of Automated Infrastructure Deployment using Git flow:
+
+![screenshot](images/automated_deploy_cicd.jpg)
+
+
+**My Selection:**
+
+For basic configuration, I’ll prefer to use the free Terraform plan and using Terraform Workspaces for each Infrastructure component.
+And for CI/CD pipeline, I’ll use GitHub Actions pipeline
