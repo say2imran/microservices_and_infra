@@ -111,3 +111,45 @@ Below is sample representation of Automated Infrastructure Deployment using Git 
 
 For basic configuration, I’ll prefer to use the free Terraform plan and using Terraform Workspaces for each Infrastructure component.
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
+
+
+## Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):
+
+**Please refer Terraform code for creating EKS cluster here** - https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/infrastructure_repo/compute_repo/eks.tf 
+
+In order to enhance **High Availability** of EKS cluster as well as workload running in the cluster, we would need to following configuration at Cluster level and Workload deployments:
+
+### Managed node groups: ###
+
+1. **'desired_capacity'** can be increased to have multiple node instances in each Availability Zone to support the workload
+2. We can also tweak **min/max/desired** capacity parameters for enabling better Auto Scalability based on use case
+3. **'capacity_type'** should be changed to **ON_DEMAND** instead of SPOT type, to ensure that servers are not taken away, causing service impact.
+
+
+
+### Multi-AZ NAT Gateway ###
+ **'single_nat_gateway'** set to ‘false’ and **‘one_nat_gateway_per_az’** set to 'true' 
+
+    This is to ensure that each Private subnet has its own NAT Gateway for outbound connection, this could avoid an outage due to AZ independent architecture.
+
+_However, error handling in application code needs to take care of NAT connectivity issues, where we would need to cause POD to fail and requests will be redirected to the other PODs running in the Subnets having access for outbound connections. It could be added as a dependent service and checked at the time of initialization, but this could create an Availability issue for the main application instance initialization._
+
+### Multi-AZ Subnets (Private/Public): ###
+
+Here we have provided configuration to have 3 Private/Public subnets for EKS Cluster, for High Availability.
+
+For **Fault Tolerance**, we can create a Multi-Region setup with a **failover routing policy in Route53**, but it has its own challenges and additional cost.
+
+### POD Disruption Budgets (PDBs): ###
+
+We can configure Pods to have PDB setup, to control max number of PODs being unavailable to increase HA
+
+### POD Topology Spread: ###
+
+It controls POD Topology/distribution skew, which could cause performance impact if
+any of the k8s nodes goes down containing a larger number of PODs due to skewed
+Distribution.
+
+
+### Max Unavailable Percentage: ###
+max_unavailable_percentage = X, which Allow up to X% of nodes to be unavailable during updates, its set to 25% in our code
