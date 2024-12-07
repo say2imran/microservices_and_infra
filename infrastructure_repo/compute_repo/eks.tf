@@ -33,6 +33,7 @@ module "eks" {
 
   node_groups = {
     ha_nodes = {
+      capacity_type  = "ON_DEMAND"
       desired_capacity = 3 
       min_size         = 3
       max_size         = 10
