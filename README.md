@@ -42,12 +42,12 @@ Orchestration of Frontend/Backend microservices and Database tier can be segrega
 **Frontend and Backend Microservices:**
 - Kubernetes **(Preferred Option)**
 
-     <u>_Pros:</u> Vendor Agnostic, flexibility, customization and control_
+     _<u>Pros:</u> Vendor Agnostic, flexibility, customization and control_
 
 
 - Container as a Service (CaaS) - such as ECS, Cloud Foundry
 
-    <u>_Pros:</u> Simplified deployment and zero to minimum maintenance_
+    _<u>Pros:</u> Simplified deployment and zero to minimum maintenance_
 
 **Database:**
 
@@ -55,7 +55,7 @@ Orchestration of Frontend/Backend microservices and Database tier can be segrega
 
 - Managed Database as a Service - (**DBaaS**)
 
-    <u>_Pros</u>: If we are using CaaS, managed Database will be make more sense due to less maintenance efforts_
+    _<u>Pros</u>: If we are using CaaS, managed Database will be make more sense due to less maintenance efforts_
 
 
 _Kubernetes can be used for both application container/pods orchestration as well as running databases using **Postgres Operator**, this setup is also **vendor agnostic** compared to another option of using Cloud Providers’s CaaS and managed DBaaS._
