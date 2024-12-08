@@ -113,7 +113,7 @@ For basic configuration, I’ll prefer to use the free Terraform plan and using 
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
 
 
-## Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):
+## [IaC] Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):
 
 **Please refer Terraform code for creating EKS cluster here** - https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/infrastructure_repo/compute_repo/eks.tf 
 
@@ -153,3 +153,43 @@ Distribution.
 
 ### Max Unavailable Percentage: ###
 max_unavailable_percentage = X, which Allow up to X% of nodes to be unavailable during updates, its set to 25% in our code
+
+# [IaC] Terraform Code Example for setting up Postgres Database on Kubernetes: #
+
+Sample code: https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/infrastructure_repo/database_repo/postgres.tf 
+
+Here we have done following configuration to make Postgres Database Highly Available
+
+**High Availability in Postgres Operator:**
+
+    Multiple replicas: replicaCount = 3
+
+**Operator Level - Topology Key** has been set as per Availability Zones with allowed skew of 1, which means DB Pods will be assigned to different zone, in our case we have 3 AZs as well as replicas set to 3, so each AZ will have a Database Pod
+
+	topologyKey: "topology.kubernetes.io/zone"
+    maxSkew = 1
+
+High Availability in **Postgres Cluster**:
+
+	instances = 3
+
+Pod Disruption Budget(PDB) for Postgres Pods:
+
+	minAvailable = 2
+
+**Anti-affinity** in Postgres Cluster Pods, which should again to prevent multiple pods in same zone:
+
+    affinity = {
+        enablePodAntiAffinity = true
+        topologyKey = "topology.kubernetes.io/zone"
+      }
+
+
+I have also configured **longhorn as StorageClass** with Backup enabled as well as multi-replicas(3 instances), it will provide better HA to the PVs being used by Postgres Cluster
+
+**To summarize, we have enabled HA in following layer:**
+
+    EKS Cluster Level HA
+    Postgres Operator Level HA
+    Postgres Cluster Level HA
+    StorageClass Level HA
