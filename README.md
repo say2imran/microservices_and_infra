@@ -285,16 +285,16 @@ Important setup and configuration to make release/deployment process easy:
 
 Infrastructure upgrades/patching/changes should be thoroughly tested in lower environments.
 
-In order to maintain **High Availability** during major upgrades, alternate Infrastructure stack can be provisioned using **Blue/Green** approach, and Application services traffic can be redirected using Canary approach
+In order to maintain **High Availability** during major upgrades, alternate Infrastructure stack can be provisioned using **Blue/Green** approach, and Application services traffic can be redirected using **Canary approach**
 
 This will require us to create alternate setup in following order:
 
 1. Create **new EKS cluster**(Major version upgrade)
 2. Deploy Application Services (app CD pipelines to deploy services on new cluster)
 3. Deploy **Route53** module with Canary configuration(initially 10% **weightage** to new cluster and 90% to services running on existing cluster)
-4. _Testing/evaluation duration of new Infrastructure upgrade/version_
+4. _Testing/evaluation duration on new Infrastructure upgrade/version before redirecting 100% traffic_
 5. **Update Route53** Canary configuration (100% to services on new cluster)
-Destroy **old EKS* Cluster
+6. Destroy **old EKS* Cluster
 
 
 
