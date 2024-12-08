@@ -194,3 +194,75 @@ I have also configured **longhorn as StorageClass** with Backup enabled as well 
     Postgres Cluster Level HA
     StorageClass Level HA
 
+## 4. Describe the solution to automate the microservices deployment and prepare the most important snippets of code/configuration
+
+Microservice can be deployed using either of the following approaches:
+
+1. CI and CD in separate Pipelines (using combination of CI tools with CD tools - Spinnaker)
+2. CI + CD in one Pipeline (using tools such as Jenkins, GitHub)
+3. GitOps - Pull based approach (tools ArgoCD or FluxCD)
+
+
+My preference will be either option #1(separate CI and CD) or option #3 (GitOps approach) based on following benefits with each of the approaches.
+
+Benefits of Option #1(Separate CI and CD):
+
+1. Less time to market (code is built/packaged only once and could be deployed to multiple
+environments)
+2. Environment specific attributes can be parameterized at CD layer and Image rebuilding
+can be avoided for Infra config changes
+3. Better segregation of duties/control/decision
+4. Less complex pipeline (compared to single Pipeline with a lot of stages)
+
+Benefits of Option #3(GitOps approach):
+
+1. Better consistency across multiple deployments - Drift protection
+2. Faster deployment, since there is continuous polling for changes
+3. Good collaboration with PR/MR/Reviews and toll gate approvals for Prod releases
+
+
+My selection here will be using **approach #1 (separate CI and CD)**, also using **Kustomize for application configuration management** for specific environment (local/dev/staging/prod)
+
+![screenshot](misc_repo/images/seperate_ci_cd_pipelines.jpg)
+
+As per **12 Factor Methodology** for Microservices and **Cloud Native Application**, each Microservice should be considered as an individual service/application.
+
+Hence following components should be separated for both Frontend and Backend Microservices:
+* Codebase *(individual GIT Repos)*
+* Build, Release, Run 
+
+We need to make sure that both Frontend and Backend Microservices have separate Git Repositories as well as CI/CD pipeline for Build, Release and Run.
+
+**Hence following CI and CD pipelines needs to be created separately for each Microservice (Frontend and Backend), using CI.yml/CD.yml files in respective repositories**
+
+**CI Pipeline (pseudo code):**
+
+```
+TRIGGER: Code CheckIn/Pull Request
+
+STAGE: Custom Coding Standards Rules
+STAGE: SCA (Software Composition Analysis)
+STAGE: SAST (Static Application Security Testing)
+STAGE: Unit Testing
+STAGE: Build
+STAGE: Containerization (Package)
+STAGE: Container Image Security Check(AquaSec/Trivy)
+STAGE: Image/Artifacts Push
+
+```
+
+**CD Pipeline (pseudo code):**
+```
+TRIGGER: CI Pipeline
+
+INPUT: Artifact ID
+STAGE: Artifact Validation/Checks/Security Analysis
+STAGE: Custom Infrastructure/Environment Checks
+STAGE: Deployment (Image and K8s resources push)
+STAGE: Integration Testing (non-prod)
+STAGE: Verification
+
+```
+
+
+
