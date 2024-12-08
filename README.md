@@ -294,7 +294,7 @@ This will require us to create alternate setup in following order:
 3. Deploy **Route53** module with Canary configuration(initially 10% **weightage** to new cluster and 90% to services running on existing cluster)
 4. _Testing/evaluation duration on new Infrastructure upgrade/version before redirecting 100% traffic_
 5. **Update Route53** Canary configuration (100% to services on new cluster)
-6. Destroy **old EKS* Cluster
+6. Destroy **old EKS** Cluster
 
 
 
