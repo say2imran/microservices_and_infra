@@ -104,7 +104,7 @@ STAGE: Apply
 
 Below is sample representation of Automated Infrastructure Deployment using Git flow:
 
-![screenshot](images/automated_deploy_cicd.jpg)
+![screenshot](misc_repo/images/automated_deploy_cicd.jpg)
 
 
 **My Selection:**
@@ -113,9 +113,9 @@ For basic configuration, I’ll prefer to use the free Terraform plan and using 
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
 
 
-## [IaC] Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):
+## [IaC] Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):##
 
-**Please refer Terraform code for creating EKS cluster here** - https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/infrastructure_repo/compute_repo/eks.tf 
+**Please refer Terraform code for creating EKS cluster here** - https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/tf_infra_compute_repo/eks.tf 
 
 In order to enhance **High Availability** of EKS cluster as well as workload running in the cluster, we would need to following configuration at Cluster level and Workload deployments:
 
@@ -154,9 +154,9 @@ Distribution.
 ### Max Unavailable Percentage: ###
 max_unavailable_percentage = X, which Allow up to X% of nodes to be unavailable during updates, its set to 25% in our code
 
-# [IaC] Terraform Code Example for setting up Postgres Database on Kubernetes: #
+## [IaC] Terraform Code Example for setting up Postgres Database on Kubernetes: ##
 
-Sample code: https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/infrastructure_repo/database_repo/postgres.tf 
+Sample code: https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/tf_infra_database_repo/postgres.tf 
 
 Here we have done following configuration to make Postgres Database Highly Available
 
@@ -193,3 +193,4 @@ I have also configured **longhorn as StorageClass** with Backup enabled as well 
     Postgres Operator Level HA
     Postgres Cluster Level HA
     StorageClass Level HA
+
