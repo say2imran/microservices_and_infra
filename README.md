@@ -113,7 +113,7 @@ For basic configuration, I’ll prefer to use the free Terraform plan and using 
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
 
 
-## [IaC] Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud):##
+## [IaC] Terraform Code Example for setting up Kubernetes (as EKS on AWS Cloud): 
 
 **Please refer Terraform code for creating EKS cluster here** - https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/tf_infra_compute_repo/eks.tf 
 
@@ -263,6 +263,38 @@ STAGE: Integration Testing (non-prod)
 STAGE: Verification
 
 ```
+
+## 5. Describe the release lifecycle for the different components
+
+Important setup and configuration to make release/deployment process easy:
+
+1. Infrastructure tiers(compute/db/etc.) should be segregated into separate Git Repositories
+(_e.g.  base_module_repo, db_module_repo, route53_module_repo, etc._)
+
+
+2. Each Infrastructure component should be released as an individual component, having its own deployment pipeline
+
+
+3. Environments(dev/staging/uat/prod) under each components should be mapped with its own Terraform Workspace
+
+
+4. Interdependence between Infrastructure components should be resolved by referring the Workspaces references
+
+
+**Approach for Major Infrastructure releases to avoid outages:**
+
+Infrastructure upgrades/patching/changes should be thoroughly tested in lower environments.
+
+In order to maintain **High Availability** during major upgrades, alternate Infrastructure stack can be provisioned using **Blue/Green** approach, and Application services traffic can be redirected using Canary approach
+
+This will require us to create alternate setup in following order:
+
+1. Create **new EKS cluster**(Major version upgrade)
+2. Deploy Application Services (app CD pipelines to deploy services on new cluster)
+3. Deploy **Route53** module with Canary configuration(initially 10% **weightage** to new cluster and 90% to services running on existing cluster)
+4. _Testing/evaluation duration of new Infrastructure upgrade/version_
+5. **Update Route53** Canary configuration (100% to services on new cluster)
+Destroy **old EKS* Cluster
 
 
 
