@@ -297,4 +297,19 @@ This will require us to create alternate setup in following order:
 6. Destroy **old EKS** Cluster
 
 
+**Another Approach:**
+
+If we don't want to adopt **Blue/Green** approach of having new cluster, there is another approach which can be used to perform upgrade in rolling fashion:
+1. Upgrade Control Plane version(example 1.25 ~> 1.26) by upgrading Terraform config
+2. For self-managed worker node group we need to follow this cycle, steps can be written as a script to reduce manual efforts:
+    - Disable Cluster Autoscaler
+	- Launch new node with upgraded EKS version
+	- Cordon existing node
+	- Drain the node
+	- Delete the node
+	- Continue with above steps for all the nodes
+	- Once all the nodes have been upgraded, enable Cluster Autoscaler
+
+This can be automated by writing script to save manual efforts.
+
 
