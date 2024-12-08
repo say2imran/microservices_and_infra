@@ -1,0 +1,9 @@
+CD Stages:
+
+TRIGGER: CI Pipeline
+INPUT: Artifact ID
+STAGE: Artifact Validation/Checks/Security Analysis
+STAGE: Custom Infrastructure/Environment Checks
+STAGE: Deployment (Image and K8s resources push)
+STAGE: Integration Testing (non-prod)
+STAGE: Verification
