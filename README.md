@@ -325,3 +325,31 @@ If microservices maintains backward-compatibility versions _(v1, v2, etc.)_ then
 
 ![screenshot](misc_repo/images/app_and_db_deployment_pipeline.jpg)
 
+## 6. Describe the testing approach for the infrastructure
+We can perform following testing to different layers of Infrastructure:
+
+1. Security Testing for Infrastructure components: 
+    e.g.:
+    - NACL – Network Access Control List
+    - Ports
+    - SSH (yes/no)
+    - Firewall Rules
+    - RBAC
+    - etc.
+
+2. Vulnerability Testing (SCA and SAST)
+    
+    _Tools - Snyk, Tfsec, Checkov, etc._
+
+3. External Services Connectivity Testing
+
+4. Load and Performance testing (usually before every major change)
+
+5. Chaos Testing
+_If Load Testing is also including while performing Chaos Testing, it will provide benchmarking of load capacity in the duration of simulated CPU/Memory/IO attacks_
+
+6. FinOps Testing
+
+7. Configuration Drift Testing
+
+8. MTTR or RTO Testing _(In simulated Disaster Recovery scenario, which could also be obtained by setting up new alternate environments using automation)_
