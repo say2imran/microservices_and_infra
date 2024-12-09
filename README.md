@@ -346,7 +346,8 @@ We can perform following testing to different layers of Infrastructure:
 4. Load and Performance testing (usually before every major change)
 
 5. Chaos Testing
-_If Load Testing is also including while performing Chaos Testing, it will provide benchmarking of load capacity in the duration of simulated CPU/Memory/IO attacks_
+
+    _If Load Testing is also including while performing Chaos Testing, it will provide benchmarking of load capacity in the duration of simulated CPU/Memory/IO attacks_
 
 6. FinOps Testing
 
