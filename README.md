@@ -312,4 +312,16 @@ If we don't want to adopt **Blue/Green** approach of having new cluster, there i
 
 This can be automated by writing script to save manual efforts.
 
+**Application(Microservices) Release Process:**
+
+Application should be tested(unit test cases, integration, regression testing, etc.) and released in following order: _Dev → UAT(staging) → Prod_
+
+As per 12 factor app, each Microservice should have its own Git Repository and CI/CD pipelines and also it should be deployed into its respective namespace.
+
+If microservices maintains backward-compatibility versions _(v1, v2, etc.)_ then releases can be done independently, however some changes have dependency between FrontEnd, BackEnd and Database components, which requires release to be done in specific order.
+
+**Database changes(DDLs, DMLs)** can be deployed either with BackEnd API or with a separate Pipeline.
+**Automated Database Deployment** tools such as **Liquibase** can be used to perform DB object release via CI/CD pipeline.
+
+![screenshot](misc_repo/images/app_and_db_deployment_pipeline.jpg)
 
