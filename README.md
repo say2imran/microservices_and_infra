@@ -426,8 +426,11 @@ SLI should be setup based on SLOs, which should align with the value to the end 
 - **Metrics:** Prometheus
 	- **Prometheus long-term storage**: Thanos
 	- **StorageClass for PVs:** Longhorn
-- **Logging:** Grafana Loki	
+    - **Thanos Long-term storage:** S3
+- **Logging:** Grafana Loki	(S3 for storage)
 - **Dashboard:**
     - **Metrics and Logs:** Grafana Dashboard
     - **Traces:** Jaeger UI
 
+
+![screenshot](misc_repo/images/monitoring_logging_stack.jpg)
