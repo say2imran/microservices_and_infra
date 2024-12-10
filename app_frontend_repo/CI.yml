@@ -1,0 +1,11 @@
+CI Stages:
+
+TRIGGER: Code CheckIn/Pull Request
+STAGE: Custom Coding Standards Rules
+STAGE: SCA (Software Composition Analysis)
+STAGE: SAST (Static Application Security Testing)
+STAGE: Unit Testing
+STAGE: Build
+STAGE: Containerization (Package)
+STAGE: Container Image Security Check(AquaSec/Trivy)
+STAGE: Image/Artifacts Push
