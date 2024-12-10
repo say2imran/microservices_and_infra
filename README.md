@@ -354,3 +354,80 @@ We can perform following testing to different layers of Infrastructure:
 7. Configuration Drift Testing
 
 8. MTTR or RTO Testing _(In simulated Disaster Recovery scenario, which could also be obtained by setting up new alternate environments using automation)_
+
+## 7. Describe the monitoring approach for the solution
+Monitoring should be performed for following components/attributes:
+
+**1. Infrastructure**
+- Compute: Node Health, CPU, Memory, IO
+- Database: CPU, Memory, Disk, Capacity, IO
+- Network Monitoring
+- Number of Kubernetes Nodes, PODs
+- Custom Events (e.g. SQS, Kinesis Shards, Custom AWS Eventbridge events)
+
+**2. Application Monitoring (APM)**
+- Availability, Uptime
+- Metrics
+- Logs
+- Traces
+- Application Custom Metrics
+- Latency (p99, p90, p50, etc.)
+- Error Response Codes
+
+**3. Real User Monitoring**
+- Real user monitoring for end-user monitoring
+
+**4. SLI, SLO and Error Budget**
+
+
+**Infrastructure Monitoring** should be configured for all tier – Frontend, Backend and Database
+
+
+**APM (Application Performance Monitoring)** should be configured for both Frontend
+and Backend Microservices which will help to understand the performance issues.
+
+**Tracing** could help in understanding the service calls, performance bottlenecks and
+insights of end to end service request call from **Frontend** to **Backend** and **Database**
+
+**RUM – Real User Monitoring** – Should be set up for the Frontend tier to monitor user-centric perspective of performance, such as page load time, user interactions, etc.
+_It could also provide meaningful information to identify the user's behavioral patterns._
+
+Kubernetes Cluster monitoring for Nodes, PODs resources utilization should be set up to identify Cost saving opportunities, KubeCost can be used in here.
+
+SLI should be setup based on SLOs, which should align with the value to the end user
+
+**FinOps dashboard** for proactive cost management and monitoring (can be integrated into Grafana)
+
+**I'll avoid following things while setting up Monitoring:**
+- Irrelevant SLOs
+- Too many alerts causing noise
+- Too many dashboards to watch
+- Unnecessary verbosity in logs
+- Sensitive information in logs
+
+
+### My selection of Monitoring Tools:
+
+#### <u> Infrastructure Monitoring: </u>
+- **Kubernetes Metrics:** Prometheus + Thanos
+- **Visualization/Dashboard:** Grafana
+
+#### <u>Application Monitoring:</u>
+- **Metrics:** OTeL
+- **Tracing:** OTeL
+- **Logging:** OTeL**
+
+        **OTel Logging is not GA for all the languages, status can be checked here - https://opentelemetry.io/status/ 
+        If its Python or Golang which is in Development or Beta stage, we can use Grafana Loki which is also Open source and later migrate to OTeL
+	
+#### <u>My OTel Stack:</u>
+
+- **Traces:** Jaeger _(Jaeger Backend: Opensearch or Elasticsearch)_
+- **Metrics:** Prometheus
+	- **Prometheus long-term storage**: Thanos
+	- **StorageClass for PVs:** Longhorn
+- **Logging:** Grafana Loki	
+- **Dashboard:**
+    - **Metrics and Logs:** Grafana Dashboard
+    - **Traces:** Jaeger UI
+
