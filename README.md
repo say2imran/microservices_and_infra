@@ -122,27 +122,50 @@ In order to enhance **High Availability** of EKS cluster as well as workload run
 ### Managed node groups: ###
 
 1. **'desired_capacity'** can be increased to have multiple node instances in each Availability Zone to support the workload
+
 2. We can also tweak **min/max/desired** capacity parameters for enabling better Auto Scalability based on use case
+
 3. **'capacity_type'** should be changed to **ON_DEMAND** instead of SPOT type, to ensure that servers are not taken away, causing service impact.
 
+```
+capacity_type  = "ON_DEMAND"
+desired_capacity = 3 
+min_size         = 3
+max_size         = 10 
+```
 
 
 ### Multi-AZ NAT Gateway ###
  **'single_nat_gateway'** set to ‘false’ and **‘one_nat_gateway_per_az’** set to 'true' 
 
-    This is to ensure that each Private subnet has its own NAT Gateway for outbound connection, this could avoid an outage due to AZ independent architecture.
+This is to ensure that each Private subnet has its own NAT Gateway for outbound connection, this could avoid an outage due to AZ independent architecture.
 
+```
+enable_nat_gateway         = true
+single_nat_gateway         = false
+```
 _However, error handling in application code needs to take care of NAT connectivity issues, where we would need to cause POD to fail and requests will be redirected to the other PODs running in the Subnets having access for outbound connections. It could be added as a dependent service and checked at the time of initialization, but this could create an Availability issue for the main application instance initialization._
 
 ### Multi-AZ Subnets (Private/Public): ###
 
 Here we have provided configuration to have 3 Private/Public subnets for EKS Cluster, for High Availability.
-
+```
+  azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+```
 For **Fault Tolerance**, we can create a Multi-Region setup with a **failover routing policy in Route53**, but it has its own challenges and additional cost.
 
 ### POD Disruption Budgets (PDBs): ###
 
 We can configure Pods to have PDB setup, to control max number of PODs being unavailable to increase HA
+```
+resource "kubernetes_pod_disruption_budget" "eks_pdb" {
+  metadata {
+    name      = "eks-ha-pdb"
+    namespace = "kube-system"
+  }
+```
 
 ### POD Topology Spread: ###
 
@@ -153,7 +176,10 @@ Distribution.
 
 ### Max Unavailable Percentage: ###
 max_unavailable_percentage = X, which Allow up to X% of nodes to be unavailable during updates, its set to 25% in our code
+```
+max_unavailable_percentage = 25
 
+```
 ## [IaC] Terraform Code Example for setting up Postgres Database on Kubernetes: ##
 
 Sample code: https://github.com/say2imran/microservices_and_infra/blob/feature/microservices_infra/tf_infra_database_repo/postgres.tf 
@@ -161,29 +187,29 @@ Sample code: https://github.com/say2imran/microservices_and_infra/blob/feature/m
 Here we have done following configuration to make Postgres Database Highly Available
 
 **High Availability in Postgres Operator:**
-
-    Multiple replicas: replicaCount = 3
-
+```
+Multiple replicas: replicaCount = 3
+```
 **Operator Level - Topology Key** has been set as per Availability Zones with allowed skew of 1, which means DB Pods will be assigned to different zone, in our case we have 3 AZs as well as replicas set to 3, so each AZ will have a Database Pod
-
-	topologyKey: "topology.kubernetes.io/zone"
-    maxSkew = 1
-
+```
+topologyKey: "topology.kubernetes.io/zone"
+maxSkew = 1
+```
 High Availability in **Postgres Cluster**:
-
-	instances = 3
-
+```
+instances = 3
+```
 Pod Disruption Budget(PDB) for Postgres Pods:
-
-	minAvailable = 2
-
+```
+minAvailable = 2
+```
 **Anti-affinity** in Postgres Cluster Pods, which should again to prevent multiple pods in same zone:
-
-    affinity = {
-        enablePodAntiAffinity = true
-        topologyKey = "topology.kubernetes.io/zone"
-      }
-
+```
+affinity = {
+    enablePodAntiAffinity = true
+    topologyKey = "topology.kubernetes.io/zone"
+    }
+```
 
 I have also configured **longhorn as StorageClass** with Backup enabled as well as multi-replicas(3 instances), it will provide better HA to the PVs being used by Postgres Cluster
 
