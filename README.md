@@ -54,6 +54,7 @@ Also,if there are concerns related to Compliance, I’ll definitely use on-prem 
 
 For on-prem setup, we can use Platform as a Service(PaaS) such as Openshift, Rancher, Cloud Foundry, etc.
 
+> [!IMPORTANT]
 > **My selection:**
 > Since I do not have on-prem setup, I'll use AWS Cloud Provider as Infrastructure Platform
 
