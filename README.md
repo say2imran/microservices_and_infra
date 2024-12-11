@@ -82,8 +82,9 @@ Orchestration of Frontend/Backend microservices and Database tier can be segrega
 
 _Kubernetes can be used for both application container/pods orchestration as well as running databases using **Postgres Operator**, this setup is also **vendor agnostic** compared to another option of using Cloud Providers’s CaaS and managed DBaaS._
 
->**My selection:**
->Kubernetes
+> [!IMPORTANT]
+> **My selection:**
+> Kubernetes
 
 ## 3. Describe the solution to automate the infrastructure deployment and prepare the most important snippets of code/configuration
 
@@ -129,8 +130,8 @@ Below is sample representation of Automated Infrastructure Deployment using Git 
 ![screenshot](misc_repo/images/automated_deploy_cicd.jpg)
 
 
-**My Selection:**
-
+> [!IMPORTANT]
+> **My Selection:**
 > For basic configuration, I’ll prefer to use the free Terraform plan and using Terraform Workspaces for each Infrastructure component.
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
 
@@ -235,12 +236,13 @@ affinity = {
 
 I have also configured **longhorn as StorageClass** with Backup enabled as well as multi-replicas(3 instances), it will provide better HA to the PVs being used by Postgres Cluster
 
-**To summarize, we have enabled HA in following layer:**
+> [!IMPORTANT]
+> **To summarize, we have enabled HA in following layer:**
 
-    EKS Cluster Level HA
-    Postgres Operator Level HA
-    Postgres Cluster Level HA
-    StorageClass Level HA
+>    EKS Cluster Level HA
+>    Postgres Operator Level HA
+>    Postgres Cluster Level HA
+>    StorageClass Level HA
 
 ## 4. Describe the solution to automate the microservices deployment and prepare the most important snippets of code/configuration
 
@@ -268,8 +270,8 @@ Benefits of **Option #3(GitOps approach)**:
 2. Faster deployment, since there is continuous polling for changes
 3. Good collaboration with PR/MR/Reviews and toll gate approvals for Prod releases
 
-
->My selection here will be using **approach #1 (separate CI and CD)**, also using **Kustomize for application configuration management** for specific environment (local/dev/staging/prod)
+> [!IMPORTANT]
+> My selection here will be using **approach #1 (separate CI and CD)**, also using **Kustomize for application configuration management** for specific environment (local/dev/staging/prod)
 
 ![screenshot](misc_repo/images/seperate_ci_cd_pipelines.jpg)
 
@@ -468,6 +470,7 @@ SLI should be setup based on SLOs, which should align with the value to the end 
         **OTel Logging is not GA for all the languages, status can be checked here - https://opentelemetry.io/status/ 
         If its Python or Golang which is in Development or Beta stage, we can use Grafana Loki which is also Open source and later migrate to OTeL
 	
+> [!IMPORTANT]
 >#### <u>My OTel Stack:</u>
 >- **Traces:** Jaeger _(Jaeger Backend: Opensearch or Elasticsearch)_
 >- **Metrics:** Prometheus
