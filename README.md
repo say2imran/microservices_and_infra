@@ -13,7 +13,7 @@
 
 6. Describe the testing approach for the infrastructure: [Click here for details](https://github.com/say2imran/microservices_and_infra#6-describe-the-testing-approach-for-the-infrastructure)
 
-7. Describe the monitoring approach for the solution: _([Click here for more details](https://github.com/say2imran/microservices_and_infra#7-describe-the-monitoring-approach-for-the-solution))_
+7. Describe the monitoring approach for the solution: _[Click here for more details](https://github.com/say2imran/microservices_and_infra#7-describe-the-monitoring-approach-for-the-solution)_
     - Infrastructure Metrics: Prometheus and Thanos
     - Application Traces/Metrics: OTel (Jaeger)
     - Application Logging:  Grafana Loki
