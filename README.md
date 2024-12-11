@@ -54,7 +54,8 @@ Also,if there are concerns related to Compliance, I’ll definitely use on-prem 
 
 For on-prem setup, we can use Platform as a Service(PaaS) such as Openshift, Rancher, Cloud Foundry, etc.
 
-**Since I do not have on-prem setup, I'll use AWS Cloud Provider as Infrastructure Platform**
+> **My selection:**
+> Since I do not have on-prem setup, I'll use AWS Cloud Provider as Infrastructure Platform
 
 ## 2. Orchestrator of choice:
 Orchestration of Frontend/Backend microservices and Database tier can be segregated as below:
@@ -80,8 +81,8 @@ Orchestration of Frontend/Backend microservices and Database tier can be segrega
 
 _Kubernetes can be used for both application container/pods orchestration as well as running databases using **Postgres Operator**, this setup is also **vendor agnostic** compared to another option of using Cloud Providers’s CaaS and managed DBaaS._
 
-**My selection:
-Kubernetes**
+>**My selection:**
+>Kubernetes
 
 ## 3. Describe the solution to automate the infrastructure deployment and prepare the most important snippets of code/configuration
 
@@ -129,7 +130,7 @@ Below is sample representation of Automated Infrastructure Deployment using Git 
 
 **My Selection:**
 
-For basic configuration, I’ll prefer to use the free Terraform plan and using Terraform Workspaces for each Infrastructure component.
+> For basic configuration, I’ll prefer to use the free Terraform plan and using Terraform Workspaces for each Infrastructure component.
 And for CI/CD pipeline, I’ll use GitHub Actions pipeline
 
 
@@ -244,14 +245,14 @@ I have also configured **longhorn as StorageClass** with Backup enabled as well 
 
 Microservice can be deployed using either of the following approaches:
 
-1. CI and CD in separate Pipelines (using combination of CI tools with CD tools - Spinnaker)
-2. CI + CD in one Pipeline (using tools such as Jenkins, GitHub)
-3. GitOps - Pull based approach (tools ArgoCD or FluxCD)
+1. **CI and CD** in separate Pipelines (using combination of CI tools with CD tools - Spinnaker)
+2. **CI + CD** in one Pipeline (using tools such as Jenkins, GitHub)
+3. **GitOps** - Pull based approach (tools ArgoCD or FluxCD)
 
 
-My preference will be either option #1(separate CI and CD) or option #3 (GitOps approach) based on following benefits with each of the approaches.
+**My preference will be either option #1(separate CI and CD) or option #3 (GitOps approach) based on following benefits with each of the approaches.**
 
-Benefits of Option #1(Separate CI and CD):
+Benefits of **Option #1(Separate CI and CD)**:
 
 1. Less time to market (code is built/packaged only once and could be deployed to multiple
 environments)
@@ -260,14 +261,14 @@ can be avoided for Infra config changes
 3. Better segregation of duties/control/decision
 4. Less complex pipeline (compared to single Pipeline with a lot of stages)
 
-Benefits of Option #3(GitOps approach):
+Benefits of **Option #3(GitOps approach)**:
 
 1. Better consistency across multiple deployments - Drift protection
 2. Faster deployment, since there is continuous polling for changes
 3. Good collaboration with PR/MR/Reviews and toll gate approvals for Prod releases
 
 
-My selection here will be using **approach #1 (separate CI and CD)**, also using **Kustomize for application configuration management** for specific environment (local/dev/staging/prod)
+>My selection here will be using **approach #1 (separate CI and CD)**, also using **Kustomize for application configuration management** for specific environment (local/dev/staging/prod)
 
 ![screenshot](misc_repo/images/seperate_ci_cd_pipelines.jpg)
 
@@ -466,17 +467,16 @@ SLI should be setup based on SLOs, which should align with the value to the end 
         **OTel Logging is not GA for all the languages, status can be checked here - https://opentelemetry.io/status/ 
         If its Python or Golang which is in Development or Beta stage, we can use Grafana Loki which is also Open source and later migrate to OTeL
 	
-#### <u>My OTel Stack:</u>
-
-- **Traces:** Jaeger _(Jaeger Backend: Opensearch or Elasticsearch)_
-- **Metrics:** Prometheus
-	- **Prometheus long-term storage**: Thanos
-	- **StorageClass for PVs:** Longhorn
-    - **Thanos Long-term storage:** S3
-- **Logging:** Grafana Loki	(S3 for storage)
-- **Dashboard:**
-    - **Metrics and Logs:** Grafana Dashboard
-    - **Traces:** Jaeger UI
+>#### <u>My OTel Stack:</u>
+>- **Traces:** Jaeger _(Jaeger Backend: Opensearch or Elasticsearch)_
+>- **Metrics:** Prometheus
+>	- **Prometheus long-term storage**: Thanos
+>	- **StorageClass for PVs:** Longhorn
+>    - **Thanos Long-term storage:** S3
+>- **Logging:** Grafana Loki	(S3 for storage)
+>- **Dashboard:**
+>    - **Metrics and Logs:** Grafana Dashboard
+>    - **Traces:** Jaeger UI
 
 
 ![screenshot](misc_repo/images/monitoring_logging_stack.jpg)
