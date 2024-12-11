@@ -15,7 +15,7 @@
 
 7. Describe the monitoring approach for the solution: _[Click here for more details](https://github.com/say2imran/microservices_and_infra#7-describe-the-monitoring-approach-for-the-solution)_
     - Infrastructure Metrics: Prometheus and Thanos
-    - Application Traces/Metrics: OTel (Jaeger)
+    - Application Traces/Metrics: OTeL (Jaeger, Prometheus)
     - Application Logging:  Grafana Loki
 
 ---
