@@ -1,4 +1,24 @@
 # Microservices and Infrastructure
+
+#### Summary:
+ 1. Choose the infrastructure platform to use: **AWS** _([Click here for more details](https://github.com/say2imran/microservices_and_infra#1-choose-the-infrastructure-platform-to-use))_
+
+2. Orchestrator of choice: **Kubernetes** _([Click here for more details](https://github.com/say2imran/microservices_and_infra#2-orchestrator-of-choice))_
+
+3. Describe the solution to automate the infrastructure deployment and prepare the most important snippets of code/configuration: **Terraform** _([Click here for more details](https://github.com/say2imran/microservices_and_infra#3-describe-the-solution-to-automate-the-infrastructure-deployment-and-prepare-the-most-important-snippets-of-codeconfiguration))_
+
+4. Describe the solution to automate the microservices deployment and prepare the most important snippets of code/configuration: **Separate CI and CD pipelines** _([Click here for more details](https://github.com/say2imran/microservices_and_infra#4-describe-the-solution-to-automate-the-microservices-deployment-and-prepare-the-most-important-snippets-of-codeconfiguration))_
+
+5. Describe the release lifecycle for the different components: [Click here for details](https://github.com/say2imran/microservices_and_infra#5-describe-the-release-lifecycle-for-the-different-components)
+
+6. Describe the testing approach for the infrastructure: [Click here for details](https://github.com/say2imran/microservices_and_infra#6-describe-the-testing-approach-for-the-infrastructure)
+
+7. Describe the monitoring approach for the solution: _([Click here for more details](https://github.com/say2imran/microservices_and_infra#7-describe-the-monitoring-approach-for-the-solution))_
+    - Infrastructure Metrics: Prometheus and Thanos
+    - Application Traces/Metrics: OTel (Jaeger)
+    - Application Logging:  Grafana Loki
+
+---
 ## 1. Choose the infrastructure platform to use
 Selecting Infrastructure Platform, depends on multiple factors and use cases.
 
